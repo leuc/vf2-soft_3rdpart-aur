@@ -58,6 +58,8 @@ package_codaj12() {
 	make -f codaj12_buildroot.mak install
 	cp -a -t "${srcdir}/${pkgbase}_v${pkgver}/target-tmp" ${pkgdir}/*
 	unlink "${srcdir}/${pkgbase}_v${pkgver}/target"
+	# kernel module loading should not touch /root
+	rm -r "${pkgdir}/root"
 }
 
 package_wave420l() {
@@ -69,6 +71,11 @@ package_wave420l() {
 	make -f WaveEncoder_buildroot.mak install
 	cp -a -t "${srcdir}/${pkgbase}_v${pkgver}/target-tmp" ${pkgdir}/*
 	unlink "${srcdir}/${pkgbase}_v${pkgver}/target"
+	# Arch has usr merge
+	mv -t "${pkgdir}/usr/lib/" "${pkgdir}/lib/firmware"
+	rmdir "${pkgdir}/lib"
+	# kernel module loading should not touch /root
+	rm -r "${pkgdir}/root"
 }
 
 package_wave511() {
@@ -80,6 +87,11 @@ package_wave511() {
 	make -f WaveDecode_buildroot.mak install
 	cp -a -t "${srcdir}/${pkgbase}_v${pkgver}/target-tmp" ${pkgdir}/*
 	unlink "${srcdir}/${pkgbase}_v${pkgver}/target"
+	# Arch has usr merge
+	mv -t "${pkgdir}/usr/lib/" "${pkgdir}/lib/firmware"
+	rmdir "${pkgdir}/lib"
+	# kernel module loading should not touch /root
+	rm -r "${pkgdir}/root"
 }
 
 # depends on the above hard-coded "target" dir 
